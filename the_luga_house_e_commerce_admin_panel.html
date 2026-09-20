@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Luga House | Siwani Collections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#e11d48',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        accent: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <header class="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100">
+        <!-- Top Announcement Bar -->
+        <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-800 text-white text-xs py-2 px-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <p class="font-medium flex items-center gap-2">
+                    <span class="bg-amber-400 text-gray-900 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Offer</span>
+                    <span>Free Home Delivery across Nepal on orders above NPR 3,000!</span>
+                </p>
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="https://wa.me/9779800000000" target="_blank" class="hover:underline flex items-center gap-1 font-semibold">
+                        <i class="fab font-bold fa-whatsapp text-emerald-400"></i> WhatsApp Support
+                    </a>
+                    <button onclick="toggleViewMode()" id="viewModeToggleBtn" class="bg-white/20 hover:bg-white/30 text-white px-2.5 py-1 rounded-md transition text-xs font-semibold flex items-center gap-1">
+                        <i class="fas fa-user-shield"></i> Switch to Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation Bar -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="filterCategory('All')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-brand-500/20 mr-3">
+                        L
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-gray-900 leading-none">THE LUGA HOUSE</h1>
+                        <p class="text-[11px] font-semibold tracking-wider text-brand-600 uppercase">Siwani Collections</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Search Bar -->
+                <div id="navSearchContainer" class="hidden md:flex flex-1 max-w-md mx-8 relative">
+                    <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search Kurtis, Men's Shirts, Kids wear, Accessories..." 
+                        class="w-full pl-10 pr-4 py-2.5 bg-gray-100 focus:bg-white border border-transparent focus:border-brand-500 rounded-full text-sm outline-none transition duration-200">
+                    <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
+                </div>
+
+                <!-- Icons & Action Menu -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <button onclick="openModal('wishlistModal')" class="p-2.5 text-gray-600 hover:text-brand-600 rounded-full hover:bg-rose-50 transition relative" title="Wishlist">
+                        <i class="far fa-heart text-xl"></i>
+                        <span id="wishlistBadge" class="hidden absolute top-1 right-1 bg-brand-600 text-white text-[10px] font-bold rounded-full h-4 min-w-[16px] px-1 flex items-center justify-center">0</span>
+                    </button>
+
+                    <button onclick="openModal('cartModal')" class="p-2.5 text-gray-600 hover:text-brand-600 rounded-full hover:bg-rose-50 transition relative" title="Cart">
+                        <i class="fas fa-shopping-bag text-xl"></i>
+                        <span id="cartBadge" class="hidden absolute top-1 right-1 bg-brand-600 text-white text-[10px] font-bold rounded-full h-4 min-w-[16px] px-1 flex items-center justify-center">0</span>
+                    </button>
+
+                    <button onclick="openModal('trackingModal')" class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-gray-700 hover:text-brand-600 bg-gray-100 hover:bg-rose-50 px-3 py-2 rounded-lg transition" title="Track Order">
+                        <i class="fas fa-truck text-brand-600"></i> Track Order
+                    </button>
+                    
+                    <button onclick="toggleViewMode()" class="md:hidden p-2 text-gray-600">
+                        <i class="fas fa-user-cog text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories Bar -->
+            <div id="customerCategoriesNav" class="flex items-center gap-2 sm:gap-6 overflow-x-auto custom-scrollbar py-2 border-t border-gray-100 text-sm font-medium text-gray-600">
+                <button onclick="filterCategory('All')" class="cat-btn active-cat px-3 py-1.5 rounded-full whitespace-nowrap transition bg-brand-600 text-white" data-cat="All">
+                    🏠 All Products
+                </button>
+                <button onclick="filterCategory('Women')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="Women">
+                    👗 Women
+                </button>
+                <button onclick="filterCategory('Men')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="Men">
+                    👔 Men
+                </button>
+                <button onclick="filterCategory('Kids')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="Kids">
+                    🧒 Kids
+                </button>
+                <button onclick="filterCategory('Accessories')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="Accessories">
+                    👜 Accessories
+                </button>
+                <button onclick="filterCategory('New Arrival')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="New Arrival">
+                    🆕 New Arrivals
+                </button>
+                <button onclick="filterCategory('Offers')" class="cat-btn px-3 py-1.5 rounded-full whitespace-nowrap hover:bg-rose-50 hover:text-brand-600 transition" data-cat="Offers">
+                    🔥 Offers & Discounts
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="mainContainer" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================= CUSTOMER STOREFRONT VIEW ================= -->
+        <section id="customerView" class="space-y-8">
+
+            <!-- Hero Banner -->
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-gray-900 via-brand-900 to-rose-950 text-white shadow-xl min-h-[220px] sm:min-h-[280px] flex items-center">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="relative z-10 p-6 sm:p-10 max-w-xl">
+                    <span class="inline-block bg-brand-500/30 border border-brand-400/30 text-rose-200 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+                        Siwani Collections Special
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight mb-3">
+                        Elevate Your Style with Authentic Nepali Elegance
+                    </h2>
+                    <p class="text-rose-100 text-xs sm:text-sm mb-6 leading-relaxed">
+                        Explore premium ladies Kurtis, modern menswear, trendy kids wear, and fashion accessories tailored with love.
+                    </p>
+                    <button onclick="filterCategory('Women')" class="bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white font-bold px-6 py-3 rounded-full text-sm shadow-lg transition transform hover:-translate-y-0.5">
+                        Shop Festival Collection
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Input -->
+            <div class="block md:hidden">
+                <div class="relative">
+                    <input type="text" id="mobileSearchInput" onkeyup="handleMobileSearch()" placeholder="Search Kurtis, Shirts, Bags..." 
+                        class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none shadow-sm">
+                    <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Filter Status Header -->
+            <div class="flex items-center justify-between border-b border-gray-200 pb-4">
+                <div>
+                    <h3 id="categoryHeading" class="text-xl font-bold text-gray-900">All Collections</h3>
+                    <p id="productCountText" class="text-xs text-gray-500 mt-0.5">Showing all items</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="text-xs text-gray-500 font-medium">Sort By:</label>
+                    <select id="sortSelect" onchange="renderProducts()" class="text-xs border border-gray-200 rounded-lg p-2 bg-white focus:outline-none focus:border-brand-500">
+                        <option value="featured">Featured</option>
+                        <option value="lowHigh">Price: Low to High</option>
+                        <option value="highLow">Price: High to Low</option>
+                        <option value="newest">New Arrivals</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Dynamically Populated Products -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyProductState" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
+                <i class="fas fa-search-minus text-4xl text-gray-300 mb-3"></i>
+                <h3 class="text-lg font-bold text-gray-700">No products found</h3>
+                <p class="text-xs text-gray-500 mt-1">Try searching for something else or clearing filters.</p>
+                <button onclick="filterCategory('All')" class="mt-4 px-4 py-2 bg-brand-600 text-white rounded-lg text-xs font-semibold">Reset View</button>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN PANEL VIEW ================= -->
+        <section id="adminView" class="hidden space-y-6">
+            <!-- Admin Header -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full font-mono border border-emerald-500/30">● LIVE SYSTEM</span>
+                        <span class="text-slate-400 text-xs">The Luga House Operations</span>
+                    </div>
+                    <h2 class="text-2xl font-extrabold mt-1">Store Admin Management</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleViewMode()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-semibold border border-slate-700 transition">
+                        <i class="fas fa-store mr-1.5"></i> Back to Customer Storefront
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Nav Tabs -->
+            <div class="flex border-b border-gray-200 gap-2">
+                <button onclick="switchAdminTab('dashboard')" id="tabBtnDashboard" class="admin-tab active-admin-tab px-5 py-3 font-semibold text-sm rounded-t-xl border-b-2 border-brand-600 text-brand-600 bg-white">
+                    <i class="fas fa-chart-line mr-2"></i> Dashboard Overview
+                </button>
+                <button onclick="switchAdminTab('products')" id="tabBtnProducts" class="admin-tab px-5 py-3 font-semibold text-sm rounded-t-xl text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-boxes mr-2"></i> Product Catalog
+                </button>
+                <button onclick="switchAdminTab('orders')" id="tabBtnOrders" class="admin-tab px-5 py-3 font-semibold text-sm rounded-t-xl text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-shopping-cart mr-2"></i> Customer Orders <span id="pendingOrdersBadge" class="ml-1.5 bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">0</span>
+                </button>
+            </div>
+
+            <!-- ADMIN TAB 1: DASHBOARD OVERVIEW -->
+            <div id="adminTabDashboard" class="space-y-6">
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium">Total Sales</p>
+                            <h3 id="statTotalSales" class="text-xl font-extrabold text-gray-900">NPR 0</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium">Total Orders</p>
+                            <h3 id="statTotalOrders" class="text-xl font-extrabold text-gray-900">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium">Pending Orders</p>
+                            <h3 id="statPendingOrders" class="text-xl font-extrabold text-gray-900">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium">Active Products</p>
+                            <h3 id="statTotalProducts" class="text-xl font-extrabold text-gray-900">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Low Stock & Best Sellers Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Low Stock Alert Box -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-exclamation-triangle text-amber-500"></i> Low Stock Warning (&le; 5 units)
+                            </h3>
+                        </div>
+                        <div id="lowStockList" class="space-y-3">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Quick Preview -->
+                    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-bolt text-brand-600"></i> Recent Activity
+                            </h3>
+                            <button onclick="switchAdminTab('orders')" class="text-xs text-brand-600 font-bold hover:underline">View All</button>
+                        </div>
+                        <div id="recentOrdersList" class="space-y-3 text-xs">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN TAB 2: PRODUCT MANAGEMENT -->
+            <div id="adminTabProducts" class="hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Inventory Items</h3>
+                            <p class="text-xs text-gray-500">Add, update prices, discounts, stock levels and tags.</p>
+                        </div>
+                        <button onclick="openProductModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-sm transition">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                    </div>
+
+                    <!-- Products Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase font-semibold">
+                                    <th class="p-3">Product</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3">Price</th>
+                                    <th class="p-3">Stock</th>
+                                    <th class="p-3">Tags</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsTableBody" class="divide-y divide-gray-100">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN TAB 3: ORDER MANAGEMENT -->
+            <div id="adminTabOrders" class="hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Customer Orders List</h3>
+                            <p class="text-xs text-gray-500">Manage order fulfillment status in real-time.</p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase font-semibold">
+                                    <th class="p-3">Order ID</th>
+                                    <th class="p-3">Customer Details</th>
+                                    <th class="p-3">Items & Specs</th>
+                                    <th class="p-3">Total Amount</th>
+                                    <th class="p-3">Payment Method</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Update Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTableBody" class="divide-y divide-gray-100">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 text-xs mt-auto border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 text-white font-bold text-lg">
+                    <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-sm font-black">L</div>
+                    The Luga House
+                </div>
+                <p class="text-gray-400 leading-relaxed">
+                    Siwani Collections - Providing top quality fashion wear across Nepal with Cash on Delivery and direct customer assistance.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase text-[11px] tracking-wider">Quick Navigation</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="filterCategory('Women')" class="hover:text-white transition">Women's Kurtis & Suits</a></li>
+                    <li><a href="#" onclick="filterCategory('Men')" class="hover:text-white transition">Men's Shirts & Wear</a></li>
+                    <li><a href="#" onclick="filterCategory('Kids')" class="hover:text-white transition">Kiddos Fashion</a></li>
+                    <li><a href="#" onclick="filterCategory('Accessories')" class="hover:text-white transition">Accessories & Bags</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase text-[11px] tracking-wider">Customer Care</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="openModal('trackingModal')" class="hover:text-white transition">Track Your Order</a></li>
+                    <li><a href="https://wa.me/9779800000000" target="_blank" class="hover:text-white transition"><i class="fab fa-whatsapp text-emerald-400 mr-1"></i> WhatsApp Helpline</a></li>
+                    <li><span>Cash on Delivery Available</span></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase text-[11px] tracking-wider">Contact Store</h4>
+                <p class="mb-1"><i class="fas fa-map-marker-alt text-brand-500 mr-2"></i> Main Market Road, Nepal</p>
+                <p class="mb-1"><i class="fas fa-phone-alt text-brand-500 mr-2"></i> +977 9800000000 / 9811111111</p>
+                <p><i class="fas fa-envelope text-brand-500 mr-2"></i> info@lugahouse.com</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 text-center py-4 text-[11px] text-gray-500">
+            &copy; <span id="yearSpan"></span> The Luga House - Siwani Collections. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- MODAL 1: PRODUCT DETAIL & SELECTION MODAL -->
+    <div id="productDetailModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal('productDetailModal')" class="absolute top-4 right-4 z-10 w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="productDetailContent" class="grid grid-cols-1 md:grid-cols-2 p-6 gap-6">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: SHOPPING CART MODAL -->
+    <div id="cartModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex justify-end">
+        <div class="bg-white w-full max-w-md h-full min-h-screen p-6 flex flex-col shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-shopping-bag text-brand-600"></i> Your Shopping Bag
+                </h3>
+                <button onclick="closeModal('cartModal')" class="text-gray-400 hover:text-gray-600 p-1">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div id="cartItemList" class="flex-1 overflow-y-auto custom-scrollbar py-4 space-y-4">
+                <!-- Cart items populated here -->
+            </div>
+
+            <div class="pt-4 border-t border-gray-100 space-y-3">
+                <div class="flex justify-between text-sm font-semibold text-gray-700">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotalText">NPR 0</span>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500">
+                    <span>Estimated Shipping:</span>
+                    <span class="text-emerald-600 font-medium">Calculated at Checkout</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-gray-900 pt-2 border-t border-dashed">
+                    <span>Total:</span>
+                    <span id="cartTotalText" class="text-brand-600">NPR 0</span>
+                </div>
+                <button onclick="proceedToCheckout()" id="btnProceedCheckout" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: WISHLIST MODAL -->
+    <div id="wishlistModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex justify-end">
+        <div class="bg-white w-full max-w-md h-full min-h-screen p-6 flex flex-col shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-heart text-rose-500"></i> Your Favorites
+                </h3>
+                <button onclick="closeModal('wishlistModal')" class="text-gray-400 hover:text-gray-600 p-1">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div id="wishlistItemList" class="flex-1 overflow-y-auto custom-scrollbar py-4 space-y-4">
+                <!-- Wishlist items -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: CHECKOUT FORM MODAL -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 z-10 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h3 class="text-xl font-extrabold text-gray-900 mb-1">Complete Your Order</h3>
+            <p class="text-xs text-gray-500 mb-6">Enter delivery details for fast shipping in Nepal.</p>
+
+            <form id="checkoutForm" onsubmit="handlePlaceOrder(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-1">Full Name *</label>
+                    <input type="text" id="custName" required placeholder="e.g. Anjali Sharma" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-brand-500 outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-1">Phone Number (Required for Call) *</label>
+                        <input type="tel" id="custPhone" required placeholder="98XXXXXXXX" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-brand-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-1">City / District *</label>
+                        <input type="text" id="custCity" required placeholder="Kathmandu, Pokhara, Chitwan..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-brand-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-1">Detailed Delivery Address *</label>
+                    <textarea id="custAddress" required rows="2" placeholder="Tole, House Number, Landmark..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:border-brand-500 outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Payment Option</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="border-2 border-brand-600 bg-rose-50/50 p-3 rounded-xl flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="COD" checked class="text-brand-600">
+                            <div>
+                                <p class="font-bold text-gray-800">Cash on Delivery</p>
+                                <p class="text-[10px] text-gray-500">Pay when received</p>
+                            </div>
+                        </label>
+                        <label class="border border-gray-200 p-3 rounded-xl flex items-center gap-2 cursor-pointer hover:border-brand-500">
+                            <input type="radio" name="paymentMethod" value="Online" class="text-brand-600">
+                            <div>
+                                <p class="font-bold text-gray-800">Online / eSewa / FonePay</p>
+                                <p class="text-[10px] text-gray-500">Scan QR on Delivery</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-50 rounded-xl space-y-1.5 border border-gray-100">
+                    <div class="flex justify-between font-semibold text-gray-700">
+                        <span>Items Total:</span>
+                        <span id="checkoutSubtotal">NPR 0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-500">
+                        <span>Delivery Charge:</span>
+                        <span id="checkoutShipping">NPR 100</span>
+                    </div>
+                    <div class="flex justify-between font-extrabold text-sm text-brand-600 pt-1 border-t">
+                        <span>Final Amount:</span>
+                        <span id="checkoutGrandTotal">NPR 0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-sm">
+                    Confirm & Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 5: ORDER TRACKING MODAL -->
+    <div id="trackingModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('trackingModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Track Order Status</h3>
+            <p class="text-xs text-gray-500 mb-4">Enter your Order ID (e.g., ORD-1001) to view status.</p>
+
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="trackInput" placeholder="ORD-XXXX" class="flex-1 p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs outline-none uppercase font-mono">
+                <button onclick="trackOrderSubmit()" class="bg-brand-600 text-white font-bold px-4 rounded-xl text-xs">Track</button>
+            </div>
+
+            <div id="trackResultContainer" class="hidden p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-3 text-xs">
+                <!-- Track info dynamically injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: ADMIN ADD/EDIT PRODUCT MODAL -->
+    <div id="productFormModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal('productFormModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="productFormTitle" class="text-lg font-bold text-gray-900 mb-4">Add New Product</h3>
+
+            <form id="adminProductForm" onsubmit="handleSaveProduct(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="editProductId">
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Product Name *</label>
+                    <input type="text" id="prodTitle" required class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Category *</label>
+                        <select id="prodCategory" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                            <option value="Women">Women</option>
+                            <option value="Men">Men</option>
+                            <option value="Kids">Kids</option>
+                            <option value="Accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Stock Quantity *</label>
+                        <input type="number" id="prodStock" required min="0" value="10" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Price (NPR) *</label>
+                        <input type="number" id="prodPrice" required min="0" step="1" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Original Price (for Discount)</label>
+                        <input type="number" id="prodOriginalPrice" min="0" step="1" placeholder="Optional" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Primary Image URL *</label>
+                    <input type="text" id="prodImg1" required placeholder="https://..." class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Secondary Image URL (Optional)</label>
+                    <input type="text" id="prodImg2" placeholder="https://..." class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Available Sizes (Comma separated)</label>
+                        <input type="text" id="prodSizes" placeholder="S, M, L, XL" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-gray-700 mb-1">Available Colors (Comma separated)</label>
+                        <input type="text" id="prodColors" placeholder="Pink, Blue, Red" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Description</label>
+                    <textarea id="prodDescription" rows="2" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl"></textarea>
+                </div>
+
+                <div class="flex items-center gap-6 pt-2">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="prodIsNew" class="text-brand-600 rounded">
+                        <span>Mark as New Arrival</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="prodIsFeatured" class="text-brand-600 rounded">
+                        <span>Mark as Featured</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 text-white font-bold py-3 rounded-xl text-xs mt-4">
+                    Save Product
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global In-Memory Data Store
+        let products = [
+            {
+                id: "P101",
+                title: "Ladies Designer Kurti",
+                category: "Women",
+                price: 1499,
+                originalPrice: 1999,
+                stock: 15,
+                sizes: ["S", "M", "L", "XL"],
+                colors: ["Pink", "Navy Blue", "Maroon"],
+                images: [
+                    "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Elegant handcrafted cotton designer kurti featuring intricate neckline embroidery. Soft, breathable fabric perfect for daily wear and festive occasions.",
+                isNew: true,
+                isFeatured: true
+            },
+            {
+                id: "P102",
+                title: "Men's Slim Fit Formal Shirt",
+                category: "Men",
+                price: 1299,
+                originalPrice: 1699,
+                stock: 8,
+                sizes: ["M", "L", "XL"],
+                colors: ["White", "Light Blue", "Black"],
+                images: [
+                    "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Premium cotton-blend wrinkle-resistant formal shirt. Crisp collar and modern fit ideal for office meetings and formal events.",
+                isNew: true,
+                isFeatured: false
+            },
+            {
+                id: "P103",
+                title: "Kid's Festive Kurta Pajama Set",
+                category: "Kids",
+                price: 999,
+                originalPrice: 1350,
+                stock: 4, // Low stock example
+                sizes: ["2-3 Yrs", "4-5 Yrs", "6-7 Yrs"],
+                colors: ["Yellow", "Royal Blue"],
+                images: [
+                    "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Comfortable ethnic ensemble for young ones with delicate thread work. Soft lining inside to prevent skin irritation.",
+                isNew: false,
+                isFeatured: true
+            },
+            {
+                id: "P104",
+                title: "Leather Handbag & Tote Bag",
+                category: "Accessories",
+                price: 1899,
+                originalPrice: 2499,
+                stock: 12,
+                sizes: ["One Size"],
+                colors: ["Tan Brown", "Black"],
+                images: [
+                    "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Spacious vegan leather handbag with multiple zipped compartments and gold-accented strap hardware.",
+                isNew: true,
+                isFeatured: true
+            },
+            {
+                id: "P105",
+                title: "Traditional Silk Saree",
+                category: "Women",
+                price: 3499,
+                originalPrice: 4500,
+                stock: 3, // Low stock
+                sizes: ["Free Size"],
+                colors: ["Red", "Emerald Green"],
+                images: [
+                    "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80"
+                ],
+                description: "Lustrous woven silk saree with rich zari border. Comes with unstitched matching blouse piece.",
+                isNew: false,
+                isFeatured: true
+            }
+        ];
+
+        let orders = [
+            {
+                id: "ORD-1001",
+                customerName: "Sita Sharma",
+                phone: "9841234567",
+                city: "Kathmandu",
+                address: "New Baneshwor, Ward 10",
+                items: [
+                    { productId: "P101", title: "Ladies Designer Kurti", price: 1499, qty: 2, size: "L", color: "Pink" }
+                ],
+                total: 3098, // 2998 + 100 shipping
+                paymentMethod: "Cash on Delivery",
+                status: "Pending",
+                date: "2026-09-20"
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let activeCategory = 'All';
+        let currentView = 'customer'; // 'customer' or 'admin'
+
+        // On Page Load
+        window.onload = function() {
+            document.getElementById('yearSpan').innerText = new Date().getFullYear();
+            renderProducts();
+            updateCartBadge();
+            updateWishlistBadge();
+            renderAdminDashboard();
+            renderAdminProducts();
+            renderAdminOrders();
+        };
+
+        function toggleViewMode() {
+            const customerView = document.getElementById('customerView');
+            const adminView = document.getElementById('adminView');
+            const navSearch = document.getElementById('navSearchContainer');
+            const catNav = document.getElementById('customerCategoriesNav');
+            const toggleBtn = document.getElementById('viewModeToggleBtn');
+
+            if (currentView === 'customer') {
+                currentView = 'admin';
+                customerView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                navSearch.classList.add('hidden');
+                catNav.classList.add('hidden');
+                toggleBtn.innerHTML = `<i class="fas fa-shopping-cart"></i> Switch to Store`;
+                toggleBtn.classList.replace('bg-white/20', 'bg-emerald-600');
+            } else {
+                currentView = 'customer';
+                adminView.classList.add('hidden');
+                customerView.classList.remove('hidden');
+                navSearch.classList.remove('hidden');
+                catNav.classList.remove('hidden');
+                toggleBtn.innerHTML = `<i class="fas fa-user-shield"></i> Switch to Admin`;
+                toggleBtn.classList.replace('bg-emerald-600', 'bg-white/20');
+            }
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.classList.remove('active-admin-tab', 'border-b-2', 'border-brand-600', 'text-brand-600', 'bg-white');
+                btn.classList.add('text-gray-500');
+            });
+
+            document.getElementById('adminTabDashboard').classList.add('hidden');
+            document.getElementById('adminTabProducts').classList.add('hidden');
+            document.getElementById('adminTabOrders').classList.add('hidden');
+
+            if (tabName === 'dashboard') {
+                document.getElementById('adminTabDashboard').classList.remove('hidden');
+                document.getElementById('tabBtnDashboard').classList.add('active-admin-tab', 'border-b-2', 'border-brand-600', 'text-brand-600', 'bg-white');
+                renderAdminDashboard();
+            } else if (tabName === 'products') {
+                document.getElementById('adminTabProducts').classList.remove('hidden');
+                document.getElementById('tabBtnProducts').classList.add('active-admin-tab', 'border-b-2', 'border-brand-600', 'text-brand-600', 'bg-white');
+                renderAdminProducts();
+            } else if (tabName === 'orders') {
+                document.getElementById('adminTabOrders').classList.remove('hidden');
+                document.getElementById('tabBtnOrders').classList.add('active-admin-tab', 'border-b-2', 'border-brand-600', 'text-brand-600', 'bg-white');
+                renderAdminOrders();
+            }
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.add('bg-brand-600', 'text-white');
+                    btn.classList.remove('hover:bg-rose-50', 'hover:text-brand-600');
+                } else {
+                    btn.classList.remove('bg-brand-600', 'text-white');
+                    btn.classList.add('hover:bg-rose-50', 'hover:text-brand-600');
+                }
+            });
+
+            document.getElementById('categoryHeading').innerText = cat === 'All' ? 'All Collections' : `${cat} Collection`;
+            renderProducts();
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            renderProducts(query);
+        }
+
+        function handleMobileSearch() {
+            const query = document.getElementById('mobileSearchInput').value.toLowerCase();
+            renderProducts(query);
+        }
+
+        function renderProducts(searchQuery = '') {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyProductState');
+            const sortVal = document.getElementById('sortSelect').value;
+
+            let filtered = products.filter(p => {
+                const matchesCat = (activeCategory === 'All') ||
+                                   (activeCategory === 'New Arrival' && p.isNew) ||
+                                   (activeCategory === 'Offers' && p.originalPrice > p.price) ||
+                                   (p.category === activeCategory);
+
+                const matchesSearch = p.title.toLowerCase().includes(searchQuery) || 
+                                      p.description.toLowerCase().includes(searchQuery) ||
+                                      p.category.toLowerCase().includes(searchQuery);
+
+                return matchesCat && matchesSearch;
+            });
+
+            // Sorting
+            if (sortVal === 'lowHigh') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'highLow') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortVal === 'newest') {
+                filtered.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+            }
+
+            document.getElementById('productCountText').innerText = `Showing ${filtered.length} products`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(p => {
+                const discount = p.originalPrice ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+                const isWishlisted = wishlist.includes(p.id);
+
+                return `
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition duration-200 overflow-hidden group flex flex-col justify-between">
+                    <div class="relative overflow-hidden cursor-pointer bg-gray-50 aspect-square" onclick="openProductDetail('${p.id}')">
+                        <img src="${p.images[0]}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x400/eee/999?text=Image+Unavailable'">
+                        
+                        <!-- Badges -->
+                        <div class="absolute top-2 left-2 flex flex-col gap-1">
+                            ${discount > 0 ? `<span class="bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow">${discount}% OFF</span>` : ''}
+                            ${p.isNew ? `<span class="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow">NEW</span>` : ''}
+                        </div>
+
+                        <!-- Wishlist Toggle -->
+                        <button onclick="event.stopPropagation(); toggleWishlist('${p.id}')" class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-gray-700 flex items-center justify-center shadow transition">
+                            <i class="${isWishlisted ? 'fas fa-heart text-rose-500' : 'far fa-heart'}"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-3.5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-brand-600 tracking-wider uppercase">${p.category}</span>
+                            <h4 onclick="openProductDetail('${p.id}')" class="font-bold text-gray-900 text-sm line-clamp-1 hover:text-brand-600 cursor-pointer mt-0.5">${p.title}</h4>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-base font-extrabold text-gray-900">NPR ${p.price.toLocaleString()}</span>
+                                ${p.originalPrice ? `<span class="text-xs text-gray-400 line-through">NPR ${p.originalPrice.toLocaleString()}</span>` : ''}
+                            </div>
+
+                            <button onclick="openProductDetail('${p.id}')" class="w-full mt-2.5 bg-rose-50 hover:bg-brand-600 text-brand-600 hover:text-white font-bold py-2 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-1">
+                                <i class="fas fa-cart-plus"></i> Select Options
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        let selectedProduct = null;
+        let selectedSize = '';
+        let selectedColor = '';
+        let selectedQty = 1;
+
+        function openProductDetail(id) {
+            selectedProduct = products.find(p => p.id === id);
+            if (!selectedProduct) return;
+
+            selectedSize = selectedProduct.sizes[0] || '';
+            selectedColor = selectedProduct.colors[0] || '';
+            selectedQty = 1;
+
+            const container = document.getElementById('productDetailContent');
+            container.innerHTML = `
+                <!-- Gallery -->
+                <div class="space-y-3">
+                    <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden">
+                        <img id="mainDetailImg" src="${selectedProduct.images[0]}" class="w-full h-full object-cover">
+                    </div>
+                    ${selectedProduct.images.length > 1 ? `
+                        <div class="flex gap-2">
+                            ${selectedProduct.images.map((img, i) => `
+                                <img src="${img}" onclick="document.getElementById('mainDetailImg').src='${img}'" class="w-14 h-14 object-cover rounded-lg border-2 border-transparent hover:border-brand-600 cursor-pointer">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- Info -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">${selectedProduct.category}</span>
+                        <h2 class="text-xl font-extrabold text-gray-900 mt-1">${selectedProduct.title}</h2>
+
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-2xl font-black text-gray-900">NPR ${selectedProduct.price.toLocaleString()}</span>
+                            ${selectedProduct.originalPrice ? `<span class="text-sm text-gray-400 line-through">NPR ${selectedProduct.originalPrice.toLocaleString()}</span>` : ''}
+                        </div>
+
+                        <p class="text-xs text-gray-600 mt-3 leading-relaxed">${selectedProduct.description}</p>
+
+                        <!-- Size Selector -->
+                        ${selectedProduct.sizes.length > 0 ? `
+                            <div class="mt-4">
+                                <label class="block text-xs font-bold text-gray-700 mb-1.5">Select Size:</label>
+                                <div class="flex flex-wrap gap-2">
+                                    ${selectedProduct.sizes.map(sz => `
+                                        <button onclick="selectVariantSize('${sz}', this)" class="size-btn px-3 py-1.5 rounded-lg border text-xs font-bold transition ${sz === selectedSize ? 'border-brand-600 bg-rose-50 text-brand-600' : 'border-gray-200 text-gray-600 hover:border-gray-300'}">
+                                            ${sz}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Color Selector -->
+                        ${selectedProduct.colors.length > 0 ? `
+                            <div class="mt-4">
+                                <label class="block text-xs font-bold text-gray-700 mb-1.5">Select Color:</label>
+                                <div class="flex flex-wrap gap-2">
+                                    ${selectedProduct.colors.map(cl => `
+                                        <button onclick="selectVariantColor('${cl}', this)" class="color-btn px-3 py-1.5 rounded-lg border text-xs font-bold transition ${cl === selectedColor ? 'border-brand-600 bg-rose-50 text-brand-600' : 'border-gray-200 text-gray-600 hover:border-gray-300'}">
+                                            ${cl}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Quantity Selector -->
+                        <div class="mt-4">
+                            <label class="block text-xs font-bold text-gray-700 mb-1.5">Quantity:</label>
+                            <div class="flex items-center gap-3">
+                                <button onclick="adjustQty(-1)" class="w-8 h-8 rounded-lg bg-gray-100 font-bold hover:bg-gray-200">-</button>
+                                <span id="qtyDisplay" class="font-bold text-sm">1</span>
+                                <button onclick="adjustQty(1)" class="w-8 h-8 rounded-lg bg-gray-100 font-bold hover:bg-gray-200">+</button>
+                                <span class="text-[11px] text-gray-400 ml-2">(${selectedProduct.stock} available)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="addSelectedToCart()" class="w-full mt-6 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2">
+                        <i class="fas fa-shopping-bag"></i> Add to Cart
+                    </button>
+                </div>
+            `;
+
+            openModal('productDetailModal');
+        }
+
+        function selectVariantSize(sz, btn) {
+            selectedSize = sz;
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('border-brand-600', 'bg-rose-50', 'text-brand-600'));
+            btn.classList.add('border-brand-600', 'bg-rose-50', 'text-brand-600');
+        }
+
+        function selectVariantColor(cl, btn) {
+            selectedColor = cl;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-brand-600', 'bg-rose-50', 'text-brand-600'));
+            btn.classList.add('border-brand-600', 'bg-rose-50', 'text-brand-600');
+        }
+
+        function adjustQty(delta) {
+            selectedQty = Math.max(1, Math.min(selectedProduct.stock, selectedQty + delta));
+            document.getElementById('qtyDisplay').innerText = selectedQty;
+        }
+
+        function addSelectedToCart() {
+            if (!selectedProduct) return;
+
+            const existingIdx = cart.findIndex(i => i.id === selectedProduct.id && i.size === selectedSize && i.color === selectedColor);
+            if (existingIdx > -1) {
+                cart[existingIdx].qty += selectedQty;
+            } else {
+                cart.push({
+                    id: selectedProduct.id,
+                    title: selectedProduct.title,
+                    price: selectedProduct.price,
+                    image: selectedProduct.images[0],
+                    size: selectedSize,
+                    color: selectedColor,
+                    qty: selectedQty
+                });
+            }
+
+            closeModal('productDetailModal');
+            updateCartBadge();
+            openModal('cartModal');
+        }
+
+        function toggleWishlist(id) {
+            const idx = wishlist.indexOf(id);
+            if (idx > -1) {
+                wishlist.splice(idx, 1);
+            } else {
+                wishlist.push(id);
+            }
+            updateWishlistBadge();
+            renderProducts();
+        }
+
+        function updateCartBadge() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const badge = document.getElementById('cartBadge');
+            if (totalQty > 0) {
+                badge.innerText = totalQty;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            renderCartModal();
+        }
+
+        function updateWishlistBadge() {
+            const badge = document.getElementById('wishlistBadge');
+            if (wishlist.length > 0) {
+                badge.innerText = wishlist.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            renderWishlistModal();
+        }
+
+        function renderCartModal() {
+            const container = document.getElementById('cartItemList');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fas fa-shopping-bag text-4xl mb-2"></i>
+                        <p class="text-xs">Your bag is empty.</p>
+                    </div>
+                `;
+                document.getElementById('cartSubtotalText').innerText = 'NPR 0';
+                document.getElementById('cartTotalText').innerText = 'NPR 0';
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                return `
+                    <div class="flex gap-3 bg-gray-50 p-3 rounded-xl border border-gray-100 items-center">
+                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h5 class="font-bold text-xs text-gray-900 line-clamp-1">${item.title}</h5>
+                            <p class="text-[10px] text-gray-500 mt-0.5">Size: ${item.size || 'N/A'} | Color: ${item.color || 'N/A'}</p>
+                            <p class="font-extrabold text-xs text-gray-900 mt-1">NPR ${item.price.toLocaleString()} x ${item.qty}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-rose-500 hover:text-rose-700 text-xs p-1">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartSubtotalText').innerText = `NPR ${subtotal.toLocaleString()}`;
+            document.getElementById('cartTotalText').innerText = `NPR ${subtotal.toLocaleString()}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+        }
+
+        function renderWishlistModal() {
+            const container = document.getElementById('wishlistItemList');
+            const wishItems = products.filter(p => wishlist.includes(p.id));
+
+            if (wishItems.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="far fa-heart text-4xl mb-2"></i>
+                        <p class="text-xs">No wishlist items saved.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = wishItems.map(p => `
+                <div class="flex gap-3 bg-gray-50 p-3 rounded-xl border border-gray-100 items-center">
+                    <img src="${p.images[0]}" class="w-14 h-14 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h5 class="font-bold text-xs text-gray-900 line-clamp-1">${p.title}</h5>
+                        <p class="font-extrabold text-xs text-brand-600 mt-0.5">NPR ${p.price.toLocaleString()}</p>
+                    </div>
+                    <button onclick="openProductDetail('${p.id}'); closeModal('wishlistModal');" class="bg-brand-600 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg">View</button>
+                </div>
+            `).join('');
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            closeModal('cartModal');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shipping = subtotal >= 3000 ? 0 : 100;
+            const grandTotal = subtotal + shipping;
+
+            document.getElementById('checkoutSubtotal').innerText = `NPR ${subtotal.toLocaleString()}`;
+            document.getElementById('checkoutShipping').innerText = shipping === 0 ? 'FREE' : `NPR ${shipping}`;
+            document.getElementById('checkoutGrandTotal').innerText = `NPR ${grandTotal.toLocaleString()}`;
+
+            openModal('checkoutModal');
+        }
+
+        function handlePlaceOrder(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const city = document.getElementById('custCity').value;
+            const address = document.getElementById('custAddress').value;
+            const payment = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shipping = subtotal >= 3000 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            const newOrderId = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
+
+            const newOrder = {
+                id: newOrderId,
+                customerName: name,
+                phone: phone,
+                city: city,
+                address: `${address}, ${city}`,
+                items: JSON.parse(JSON.stringify(cart)),
+                total: total,
+                paymentMethod: payment,
+                status: 'Pending',
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            orders.unshift(newOrder);
+
+            // Clear cart & close checkout
+            cart = [];
+            updateCartBadge();
+            closeModal('checkoutModal');
+
+            // Refresh Admin views
+            renderAdminDashboard();
+            renderAdminOrders();
+
+            // Display Order Success Prompt
+            showOrderSuccessModal(newOrder);
+        }
+
+        function showOrderSuccessModal(order) {
+            const itemsText = order.items.map(i => `• ${i.title} (${i.size}/${i.color}) x${i.qty}`).join('%0A');
+            const waMessage = `Hello The Luga House! I placed an order:%0A%0A*Order ID:* ${order.id}%0A*Name:* ${order.customerName}%0A*Total:* NPR ${order.total}%0A%0A*Items:*%0A${itemsText}`;
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4';
+            alertDiv.innerHTML = `
+                <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-gray-900">Order Placed!</h3>
+                    <p class="text-xs text-gray-500">Your Order ID is <strong class="font-mono text-brand-600">${order.id}</strong>. We will call you at ${order.phone} to confirm delivery.</p>
+                    <div class="space-y-2 pt-2">
+                        <a href="https://wa.me/9779800000000?text=${waMessage}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp text-base"></i> Confirm on WhatsApp
+                        </a>
+                        <button onclick="this.closest('.fixed').remove()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl text-xs">
+                            Done Shopping
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(alertDiv);
+        }
+
+        function trackOrderSubmit() {
+            const orderId = document.getElementById('trackInput').value.trim().toUpperCase();
+            const container = document.getElementById('trackResultContainer');
+
+            const found = orders.find(o => o.id === orderId);
+            container.classList.remove('hidden');
+
+            if (!found) {
+                container.innerHTML = `<p class="text-rose-500 font-bold">No order found with ID "${orderId}".</p>`;
+                return;
+            }
+
+            const statusColors = {
+                'Pending': 'bg-amber-100 text-amber-800',
+                'Confirmed': 'bg-blue-100 text-blue-800',
+                'Packed': 'bg-purple-100 text-purple-800',
+                'Shipped': 'bg-indigo-100 text-indigo-800',
+                'Delivered': 'bg-emerald-100 text-emerald-800'
+            };
+
+            container.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-mono font-bold">${found.id}</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${statusColors[found.status]}">${found.status}</span>
+                </div>
+                <p><strong>Customer:</strong> ${found.customerName}</p>
+                <p><strong>Address:</strong> ${found.address}</p>
+                <p><strong>Total Amount:</strong> NPR ${found.total.toLocaleString()}</p>
+            `;
+        }
+
+        function renderAdminDashboard() {
+            const totalSales = orders.filter(o => o.status === 'Delivered').reduce((sum, o) => sum + o.total, 0);
+            const pendingCount = orders.filter(o => o.status === 'Pending').reduce((sum) => sum + 1, 0);
+
+            document.getElementById('statTotalSales').innerText = `NPR ${totalSales.toLocaleString()}`;
+            document.getElementById('statTotalOrders').innerText = orders.length;
+            document.getElementById('statPendingOrders').innerText = pendingCount;
+            document.getElementById('statTotalProducts').innerText = products.length;
+            document.getElementById('pendingOrdersBadge').innerText = pendingCount;
+
+            // Render Low Stock
+            const lowStockItems = products.filter(p => p.stock <= 5);
+            const lowStockContainer = document.getElementById('lowStockList');
+            if (lowStockItems.length === 0) {
+                lowStockContainer.innerHTML = `<p class="text-xs text-gray-400">All products have healthy inventory levels.</p>`;
+            } else {
+                lowStockContainer.innerHTML = lowStockItems.map(p => `
+                    <div class="flex justify-between items-center p-2.5 bg-amber-50 rounded-xl border border-amber-100 text-xs">
+                        <span class="font-bold text-gray-800">${p.title}</span>
+                        <span class="font-mono font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">${p.stock} left</span>
+                    </div>
+                `).join('');
+            }
+
+            // Render Recent Orders Preview
+            const recentContainer = document.getElementById('recentOrdersList');
+            recentContainer.innerHTML = orders.slice(0, 3).map(o => `
+                <div class="flex justify-between items-center p-2.5 bg-gray-50 rounded-xl border border-gray-100">
+                    <div>
+                        <span class="font-bold font-mono text-gray-900">${o.id}</span> - ${o.customerName}
+                        <p class="text-[10px] text-gray-400">${o.items.length} item(s) • NPR ${o.total.toLocaleString()}</p>
+                    </div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-200 text-gray-700">${o.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('adminProductsTableBody');
+            tbody.innerHTML = products.map(p => `
+                <tr class="hover:bg-gray-50/50">
+                    <td class="p-3 flex items-center gap-3">
+                        <img src="${p.images[0]}" class="w-10 h-10 object-cover rounded-lg border">
+                        <div>
+                            <p class="font-bold text-gray-900">${p.title}</p>
+                            <p class="text-[10px] text-gray-400 font-mono">ID: ${p.id}</p>
+                        </div>
+                    </td>
+                    <td class="p-3 font-medium text-gray-600">${p.category}</td>
+                    <td class="p-3 font-bold text-gray-900">NPR ${p.price.toLocaleString()}</td>
+                    <td class="p-3">
+                        <span class="font-mono font-bold ${p.stock <= 5 ? 'text-rose-600' : 'text-emerald-600'}">${p.stock}</span>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex gap-1">
+                            ${p.isNew ? '<span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-1.5 py-0.5 rounded">NEW</span>' : ''}
+                            ${p.isFeatured ? '<span class="bg-purple-100 text-purple-700 text-[9px] font-bold px-1.5 py-0.5 rounded">FEATURED</span>' : ''}
+                        </div>
+                    </td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="editProduct('${p.id}')" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i> Edit</button>
+                        <button onclick="deleteProduct('${p.id}')" class="text-rose-600 hover:text-rose-800"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTableBody');
+            tbody.innerHTML = orders.map(o => {
+                const itemsSummary = o.items.map(i => `${i.title} (${i.size}/${i.color}) x${i.qty}`).join('<br>');
+                return `
+                    <tr class="hover:bg-gray-50/50">
+                        <td class="p-3 font-mono font-bold text-brand-600">${o.id}</td>
+                        <td class="p-3">
+                            <p class="font-bold text-gray-900">${o.customerName}</p>
+                            <p class="text-[10px] text-gray-500"><i class="fas fa-phone mr-1"></i>${o.phone}</p>
+                            <p class="text-[10px] text-gray-400 line-clamp-1">${o.address}</p>
+                        </td>
+                        <td class="p-3 text-[11px] leading-snug">${itemsSummary}</td>
+                        <td class="p-3 font-extrabold text-gray-900">NPR ${o.total.toLocaleString()}</td>
+                        <td class="p-3 font-medium text-gray-600">${o.paymentMethod}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded text-[10px] font-bold ${
+                                o.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800' :
+                                o.status === 'Pending' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                            }">${o.status}</span>
+                        </td>
+                        <td class="p-3 text-right">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="p-1 border border-gray-200 rounded text-[11px] bg-white font-medium">
+                                <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                                <option value="Packed" ${o.status === 'Packed' ? 'selected' : ''}>Packed</option>
+                                <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                                <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const target = orders.find(o => o.id === orderId);
+            if (target) {
+                target.status = newStatus;
+                renderAdminDashboard();
+                renderAdminOrders();
+            }
+        }
+
+        function openProductModal(prodId = null) {
+            const form = document.getElementById('adminProductForm');
+            form.reset();
+
+            if (prodId) {
+                const prod = products.find(p => p.id === prodId);
+                document.getElementById('productFormTitle').innerText = 'Edit Product';
+                document.getElementById('editProductId').value = prod.id;
+                document.getElementById('prodTitle').value = prod.title;
+                document.getElementById('prodCategory').value = prod.category;
+                document.getElementById('prodStock').value = prod.stock;
+                document.getElementById('prodPrice').value = prod.price;
+                document.getElementById('prodOriginalPrice').value = prod.originalPrice || '';
+                document.getElementById('prodImg1').value = prod.images[0] || '';
+                document.getElementById('prodImg2').value = prod.images[1] || '';
+                document.getElementById('prodSizes').value = prod.sizes.join(', ');
+                document.getElementById('prodColors').value = prod.colors.join(', ');
+                document.getElementById('prodDescription').value = prod.description;
+                document.getElementById('prodIsNew').checked = prod.isNew;
+                document.getElementById('prodIsFeatured').checked = prod.isFeatured;
+            } else {
+                document.getElementById('productFormTitle').innerText = 'Add New Product';
+                document.getElementById('editProductId').value = '';
+            }
+
+            openModal('productFormModal');
+        }
+
+        function editProduct(id) {
+            openProductModal(id);
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            renderProducts();
+            renderAdminProducts();
+            renderAdminDashboard();
+        }
+
+        function handleSaveProduct(e) {
+            e.preventDefault();
+
+            const editId = document.getElementById('editProductId').value;
+            const title = document.getElementById('prodTitle').value;
+            const category = document.getElementById('prodCategory').value;
+            const stock = parseInt(document.getElementById('prodStock').value);
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const originalPrice = parseFloat(document.getElementById('prodOriginalPrice').value) || null;
+            const img1 = document.getElementById('prodImg1').value;
+            const img2 = document.getElementById('prodImg2').value;
+            const sizes = document.getElementById('prodSizes').value.split(',').map(s => s.trim()).filter(Boolean);
+            const colors = document.getElementById('prodColors').value.split(',').map(c => c.trim()).filter(Boolean);
+            const description = document.getElementById('prodDescription').value;
+            const isNew = document.getElementById('prodIsNew').checked;
+            const isFeatured = document.getElementById('prodIsFeatured').checked;
+
+            const images = [img1];
+            if (img2) images.push(img2);
+
+            if (editId) {
+                const target = products.find(p => p.id === editId);
+                Object.assign(target, { title, category, stock, price, originalPrice, images, sizes, colors, description, isNew, isFeatured });
+            } else {
+                const newProd = {
+                    id: 'P' + Math.floor(100 + Math.random() * 900),
+                    title, category, stock, price, originalPrice, images, sizes, colors, description, isNew, isFeatured
+                };
+                products.unshift(newProd);
+            }
+
+            closeModal('productFormModal');
+            renderProducts();
+            renderAdminProducts();
+            renderAdminDashboard();
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
